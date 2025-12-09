@@ -1,0 +1,57 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Event {
+  id          String   @id @default(cuid())
+  slug        String   @unique
+  title       String
+  description String   @db.Text
+  coverImage  String
+  venue       String
+  date        DateTime
+  city        String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  listings    Listing[]
+
+  @@index([slug])
+  @@index([date])
+}
+
+model Listing {
+  id      String @id @default(cuid())
+  eventId String
+
+  ticketType  String
+  row         String?
+  seatNumbers String?
+
+  originalPricePerTicket Float?
+  serviceFeePerTicket    Float?
+  deliveryMethod         String
+
+  isPurchasable Boolean   @default(true)
+  expiresAt     DateTime?
+
+  status    String   @default("available")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  event Event @relation(fields: [eventId], references: [id], onDelete: Cascade)
+
+  @@index([eventId])
+  @@index([status])
+}
