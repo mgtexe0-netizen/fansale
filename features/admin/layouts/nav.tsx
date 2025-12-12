@@ -20,40 +20,15 @@ export default function DashboardNav() {
   return (
     <nav className="bg-white border-b border-gray-200">
       <div className="max-w-6xl mx-auto px-4 md:px-6 py-3 md:py-4">
-        {/* top row */}
+        {/* header row */}
         <div className="flex items-center justify-between gap-3">
-          <div className="flex items-center gap-3 md:gap-8">
-            <Link href="/admin/overview" className="shrink-0">
-              <h1 className="text-xl md:text-2xl font-bold text-pilot-purple-primary bg-clip-text cursor-pointer">
-                Admin
-              </h1>
-            </Link>
+          <Link href="/admin/overview" className="shrink-0">
+            <h1 className="text-xl md:text-2xl font-bold text-pilot-purple-primary cursor-pointer">
+              Admin
+            </h1>
+          </Link>
 
-            {/* tabs */}
-            <div className="bg-gray-100 p-1 rounded-lg w-full md:w-auto">
-              <div className="flex items-center gap-1 md:gap-2 overflow-x-auto no-scrollbar">
-                <Link href="/admin/overview">
-                  <button className={tabClass(isActive("/admin/overview"))}>
-                    Overview
-                  </button>
-                </Link>
-
-                <Link href="/admin/event/create">
-                  <button className={tabClass(isActive("/admin/event/create"))}>
-                    Create event
-                  </button>
-                </Link>
-
-                <Link href="/admin/event/all">
-                  <button className={tabClass(isActive("/admin/event/all"))}>
-                    Event list
-                  </button>
-                </Link>
-              </div>
-            </div>
-          </div>
-
-          {/* right icons */}
+          {/* right icons (show on mobile too) */}
           <div className="flex items-center gap-1 md:gap-3 shrink-0">
             <Link href="/dashboard/settings">
               <button className="p-2 rounded-lg hover:bg-gray-100 transition-all">
@@ -65,9 +40,33 @@ export default function DashboardNav() {
             </button>
           </div>
         </div>
+
+        {/* tabs row */}
+        <div className="mt-3 md:mt-0 md:ml-0">
+          <div className="bg-gray-100 p-1 rounded-lg w-full md:w-fit">
+            <div className="flex items-center gap-1 md:gap-2 overflow-x-auto no-scrollbar">
+              <Link href="/admin/overview">
+                <button className={tabClass(isActive("/admin/overview"))}>
+                  Overview
+                </button>
+              </Link>
+
+              <Link href="/admin/event/create">
+                <button className={tabClass(isActive("/admin/event/create"))}>
+                  Create event
+                </button>
+              </Link>
+
+              <Link href="/admin/event/all">
+                <button className={tabClass(isActive("/admin/event/all"))}>
+                  Event list
+                </button>
+              </Link>
+            </div>
+          </div>
+        </div>
       </div>
 
-      {/* hide scrollbar (optional) */}
       <style jsx global>{`
         .no-scrollbar::-webkit-scrollbar {
           display: none;
