@@ -6,17 +6,18 @@ import Image from "next/image";
 import { prisma } from "@/lib/prisma";
 
 async function getAllEvents() {
-  const events = await prisma.event.findMany({
-    orderBy: { date: "asc" },
-    include: {
-      listings: {
-        where: { status: "available" },
-        include: {
-          items: true, // ✅ IMPORTANT
-        },
+const events = await prisma.event.findMany({
+  orderBy: { date: "asc" },
+  include: {
+    listings: {
+      where: { status: "available" },
+      include: {
+        items: true, 
       },
     },
-  });
+  },
+});
+
 
   return events.map((event) => {
     const minPrice = event.listings.reduce((min, listing) => {
