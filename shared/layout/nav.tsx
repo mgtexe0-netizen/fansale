@@ -4,6 +4,14 @@
 
 import Link from "next/link";
 
+const EXT = {
+  home: "https://www.fansale.it/",
+  sell: "https://www.fansale.it/fansale/sell.htm",
+  login: "https://www.fansale.it/fansale/login.htm",
+  search: "https://www.fansale.it/",
+  menu: "https://www.fansale.it/?help=about",
+};
+
 export default function MainNavbar() {
   return (
     <header className="w-full bg-[#002b55] text-white shadow-md">
@@ -12,15 +20,23 @@ export default function MainNavbar() {
         <div className="hidden md:flex items-center gap-3">
           {/* Logo */}
           <Link
-            href="/"
+            href={EXT.home}
+            target="_blank"
+            rel="noopener noreferrer"
             className="flex items-center text-[28px] font-bold leading-none"
           >
             <span className="text-white">fan</span>
             <span className="text-[#feca27]">SALE</span>
           </Link>
 
-          {/* Search bar */}
-          <form className="flex-1 flex items-stretch ml-2">
+          {/* Search bar (kept UI, but submit opens official site) */}
+          <form
+            className="flex-1 flex items-stretch ml-2"
+            onSubmit={(e) => {
+              e.preventDefault();
+              window.open(EXT.search, "_blank", "noopener,noreferrer");
+            }}
+          >
             <input
               type="text"
               placeholder="Search for event, artist, location"
@@ -47,21 +63,27 @@ export default function MainNavbar() {
           {/* Right actions */}
           <div className="flex items-stretch gap-2 ml-2">
             <Link
-              href="/sell"
+              href={EXT.sell}
+              target="_blank"
+              rel="noopener noreferrer"
               className="px-5 inline-flex items-center justify-center bg-[#074477] hover:bg-[#0b578f] text-[13px] font-semibold rounded-none h-[32px]"
             >
               Sell
             </Link>
 
             <Link
-              href="/login"
+              href={EXT.login}
+              target="_blank"
+              rel="noopener noreferrer"
               className="px-5 inline-flex items-center justify-center bg-[#074477] hover:bg-[#0b578f] text-[13px] font-semibold rounded-none h-[32px]"
             >
               Login
             </Link>
 
-            <button
-              type="button"
+            <Link
+              href={EXT.menu}
+              target="_blank"
+              rel="noopener noreferrer"
               className="w-[60px] h-[32px] bg-[#074477] hover:bg-[#0b578f] flex flex-col items-center justify-center rounded-none leading-tight"
             >
               <span className="mb-[1px]">
@@ -70,7 +92,7 @@ export default function MainNavbar() {
                 <span className="block w-4 h-[2px] bg-white" />
               </span>
               <span className="text-[10px]">Menu</span>
-            </button>
+            </Link>
           </div>
         </div>
 
@@ -79,7 +101,9 @@ export default function MainNavbar() {
           {/* top row: logo + icon buttons */}
           <div className="flex items-center justify-between">
             <Link
-              href="/"
+              href={EXT.home}
+              target="_blank"
+              rel="noopener noreferrer"
               className="flex items-center text-[24px] leading-none font-bold"
             >
               <span className="text-white">fan</span>
@@ -88,9 +112,12 @@ export default function MainNavbar() {
 
             <div className="flex items-center gap-1">
               {/* top search square */}
-              <button
-                type="button"
+              <Link
+                href={EXT.search}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="w-[40px] h-[32px] bg-white flex items-center justify-center text-[#002b55]"
+                aria-label="Search on fanSALE Italy"
               >
                 <svg
                   aria-hidden="true"
@@ -103,12 +130,15 @@ export default function MainNavbar() {
                   <circle cx="11" cy="11" r="6" />
                   <line x1="16" y1="16" x2="21" y2="21" />
                 </svg>
-              </button>
+              </Link>
 
               {/* menu square */}
-              <button
-                type="button"
+              <Link
+                href={EXT.menu}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="w-[48px] h-[32px] bg-[#074477] flex flex-col items-center justify-center leading-none"
+                aria-label="Menu on fanSALE Italy"
               >
                 <span className="mb-[1px]">
                   <span className="block w-4 h-[2px] bg-white mb-[3px]" />
@@ -116,12 +146,18 @@ export default function MainNavbar() {
                   <span className="block w-4 h-[2px] bg-white" />
                 </span>
                 <span className="text-[9px] mt-[1px]">Menu</span>
-              </button>
+              </Link>
             </div>
           </div>
 
           {/* middle row: long search bar with icon inside */}
-          <div className="relative">
+          <form
+            className="relative"
+            onSubmit={(e) => {
+              e.preventDefault();
+              window.open(EXT.search, "_blank", "noopener,noreferrer");
+            }}
+          >
             <input
               type="text"
               placeholder="Search for event, artist, location"
@@ -143,18 +179,22 @@ export default function MainNavbar() {
                 <line x1="16" y1="16" x2="21" y2="21" />
               </svg>
             </button>
-          </div>
+          </form>
 
           {/* bottom row: Sell / Login full-width buttons */}
           <div className="flex gap-2 mt-1">
             <Link
-              href="/sell"
+              href={EXT.sell}
+              target="_blank"
+              rel="noopener noreferrer"
               className="flex-1 h-[32px] bg-[#074477] hover:bg-[#0b578f] text-center text-[13px] font-semibold flex items-center justify-center"
             >
               Sell
             </Link>
             <Link
-              href="/login"
+              href={EXT.login}
+              target="_blank"
+              rel="noopener noreferrer"
               className="flex-1 h-[32px] bg-[#074477] hover:bg-[#0b578f] text-center text-[13px] font-semibold flex items-center justify-center"
             >
               Login

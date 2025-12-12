@@ -41,20 +41,23 @@ export async function generateMetadata({
     description,
   };
 }
-
 async function getEvent(eventSlug: string) {
   return prisma.event.findUnique({
     where: { slug: eventSlug },
     include: {
       listings: {
         where: { status: "available" },
+        include: {
+          items: true, 
+        },
       },
     },
   });
 }
 
+
 export default async function EventPage({ params }: PageProps) {
-  const { eventSlug } = await params; // ✅ unwrap params promise
+  const { eventSlug } = await params; 
   const event = await getEvent(eventSlug);
 
   if (!event) notFound();
@@ -92,7 +95,6 @@ export default async function EventPage({ params }: PageProps) {
       {/* Tickets + DESKTOP seat map (inside TicketCard) */}
       <TicketCard eventSlug={event.slug} listings={event.listings} />
 
-      {/* Bottom info blocks */}
       <div className="flex flex-col gap-3">
         <div className="mx-auto mt-8 bg-white border border-[#d7d7d7] shadow-lg px-6 py-4">
           <h2 className="text-fns-primary mb-2 text-2xl font-medium">

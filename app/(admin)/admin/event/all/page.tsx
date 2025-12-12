@@ -11,16 +11,34 @@ async function getAllEvents() {
     include: {
       listings: {
         where: { status: "available" },
+        include: {
+          items: true, // ✅ IMPORTANT
+        },
       },
     },
   });
 
   return events.map((event) => {
     const minPrice = event.listings.reduce((min, listing) => {
-      const price =
-        (listing.originalPricePerTicket || 0) +
-        (listing.serviceFeePerTicket || 0);
-      return price < min ? price : min;
+      const items = listing.items ?? [];
+      const qty = items.length;
+
+      // sum of variant prices
+      const baseTotal = items.reduce(
+        (sum, it) => sum + Number(it.basePrice || 0),
+        0
+      );
+
+      // fee per ticket * qty
+      const feePerTicket = Number(listing.serviceFeePerTicket || 0);
+      const totalFee = feePerTicket * qty;
+
+      const fixedPrice = baseTotal + totalFee;
+
+      // ignore empty offers (no variants)
+      if (qty === 0) return min;
+
+      return fixedPrice < min ? fixedPrice : min;
     }, Infinity);
 
     return {
@@ -116,7 +134,7 @@ export default async function AllEvents() {
                             strokeLinecap="round"
                             strokeLinejoin="round"
                             strokeWidth={2}
-                            d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                            d="M15 11a3 3 0 11-6 0 3 0 016 0z"
                           />
                         </svg>
                         {event.venue}, {event.city}
@@ -136,7 +154,7 @@ export default async function AllEvents() {
                             d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z"
                           />
                         </svg>
-                        {event.availableCount} ticket
+                        {event.availableCount} offer
                         {event.availableCount !== 1 ? "s" : ""} available
                       </p>
                     </div>
@@ -145,7 +163,7 @@ export default async function AllEvents() {
                       <div>
                         <p className="text-sm text-gray-600">From</p>
                         <p className="text-2xl font-bold text-blue-900">
-                          {event.minPrice
+                          {event.minPrice != null
                             ? `£${event.minPrice.toFixed(2)}`
                             : "N/A"}
                         </p>

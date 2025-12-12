@@ -35,13 +35,12 @@ model Listing {
   id      String @id @default(cuid())
   eventId String
 
-  ticketType  String
-  row         String?
-  seatNumbers String?
-description String?
-  originalPricePerTicket Float?
-  serviceFeePerTicket    Float?
-  deliveryMethod         String
+  ticketType     String
+  description    String?
+  deliveryMethod String
+
+  // fee applied PER ticket
+serviceFeePerTicket Float?
 
   isPurchasable Boolean   @default(true)
   expiresAt     DateTime?
@@ -51,7 +50,22 @@ description String?
   updatedAt DateTime @updatedAt
 
   event Event @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  items ListingItem[]
 
   @@index([eventId])
   @@index([status])
+}
+
+model ListingItem {
+  id        String @id @default(cuid())
+  listingId String
+
+  row        String?
+  seatNumber String?
+  basePrice  Float
+
+  quantity   Int @default(1) // ✅ editable stock
+
+  listing Listing @relation(fields: [listingId], references: [id], onDelete: Cascade)
+  @@index([listingId])
 }

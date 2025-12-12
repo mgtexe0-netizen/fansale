@@ -7,8 +7,6 @@ export async function POST(req: Request) {
   try {
     const body = await req.json();
 
-    // console.log("Received body:", body);
-
     const {
       title,
       slug,
@@ -19,16 +17,6 @@ export async function POST(req: Request) {
       city,
       listings,
     } = body;
-
-    // console.log("Extracted fields:", {
-    //   title,
-    //   slug,
-    //   description,
-    //   coverImage,
-    //   venue,
-    //   date,
-    //   city,
-    // });
 
     const normalizedListings = Array.isArray(listings) ? listings : [];
 
@@ -44,33 +32,39 @@ export async function POST(req: Request) {
 
     if (normalizedListings.length > 0) {
       data.listings = {
-        create: normalizedListings.map((l: any) => ({
-          ticketType: l.ticketType,
-          row: l.row ?? null,
-          seatNumbers: l.seatNumbers ?? null,
-          description: l.description ?? null,
+        create: normalizedListings.map((l: any) => {
+          const items = Array.isArray(l.items) ? l.items : [];
 
-          originalPricePerTicket:
-            l.originalPricePerTicket != null
-              ? Number(l.originalPricePerTicket)
-              : null,
-          serviceFeePerTicket:
-            l.serviceFeePerTicket != null
-              ? Number(l.serviceFeePerTicket)
-              : null,
+          return {
+            ticketType: l.ticketType,
+            description: l.description ?? null,
+            deliveryMethod: l.deliveryMethod ?? "Eventim",
+            serviceFeePerTicket: Number(l.serviceFeePerTicket ?? 0),
+            isPurchasable:
+              typeof l.isPurchasable === "boolean" ? l.isPurchasable : true,
+            expiresAt: l.expiresAt ? new Date(l.expiresAt) : null,
+            status: "available",
 
-          deliveryMethod: l.deliveryMethod ?? "Eventim",
-          isPurchasable:
-            typeof l.isPurchasable === "boolean" ? l.isPurchasable : true,
-          expiresAt: l.expiresAt ? new Date(l.expiresAt) : null,
-        })),
+            items: {
+              create: items.map((it: any) => ({
+                row: it.row ?? null,
+                seatNumber: it.seatNumber ?? null,
+                description: it.description ?? null,
+                basePrice: Number(it.basePrice),
+                quantity: Number(it.quantity ?? 1), // ✅ NEW
+              })),
+            },
+          };
+        }),
       };
     }
 
     const event = await prisma.event.create({
       data,
       include: {
-        listings: true,
+        listings: {
+          include: { items: true },
+        },
       },
     });
 
@@ -95,6 +89,7 @@ export async function GET(req: Request) {
         include: {
           listings: {
             where: { status: "available" },
+            include: { items: true },
           },
         },
       });
@@ -111,6 +106,7 @@ export async function GET(req: Request) {
       include: {
         listings: {
           where: { status: "available" },
+          include: { items: true },
         },
       },
     });
