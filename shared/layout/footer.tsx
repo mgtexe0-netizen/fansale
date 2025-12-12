@@ -1,8 +1,12 @@
 /** @format */
 
 import Link from "next/link";
+import Image from "next/image";
 import { ChevronRight } from "lucide-react";
-
+import paypallogo from "../../public/paypal-784404_640.webp";
+import mastercard from "../../public/mastercard.webp";
+import visa from "../../public/visa-logo-png_seeklogo-299317.webp";
+import language from "../../public/language.png"
 export default function Footer() {
   return (
     <footer className="mt-5">
@@ -52,15 +56,33 @@ export default function Footer() {
               <h3 className="font-bold mb-2 text-[15px] text-fns-primary">
                 Payment methods
               </h3>
-              <div className="flex md:justify-start gap-3 mt-4">
-                <span className="inline-flex items-center justify-center px-3 h-7 rounded-sm border border-[#d0d0d0] text-[11px] font-semibold text-[#003366] bg-[#ffffff]">
-                  VISA
+              <div className="flex md:justify-start flex-wrap gap-3 mt-4">
+                <span className="inline-flex items-center justify-center px-3 h-7 rounded-sm border border-[#d0d0d0] bg-[#ffffff]">
+                  <Image
+                    src={visa}
+                    alt="VISA"
+                    width={40}
+                    height={20}
+                    className="object-contain"
+                  />
                 </span>
-                <span className="inline-flex items-center justify-center px-3 h-7 rounded-sm border border-[#d0d0d0] text-[11px] font-semibold text-[#c13526] bg-[#ffffff]">
-                  Mastercard
+                <span className="inline-flex items-center justify-center px-3 h-7 rounded-sm border border-[#d0d0d0] bg-[#ffffff]">
+                  <Image
+                    src={mastercard}
+                    alt="Mastercard"
+                    width={40}
+                    height={20}
+                    className="object-contain"
+                  />
                 </span>
-                <span className="inline-flex items-center justify-center px-3 h-7 rounded-sm border border-[#d0d0d0] text-[11px] font-semibold text-[#0070ba] bg-[#ffffff]">
-                  PayPal
+                <span className="inline-flex items-center justify-center px-3 h-7 rounded-sm border border-[#d0d0d0] bg-[#ffffff]">
+                  <Image
+                    src={paypallogo}
+                    alt="PayPal"
+                    width={40}
+                    height={20}
+                    className="object-contain"
+                  />
                 </span>
               </div>
             </div>
@@ -118,14 +140,32 @@ export default function Footer() {
             <ChevronRight className="w-5 h-5" />
           </summary>
           <div className="px-6 pb-4 flex gap-3">
-            <span className="inline-flex items-center justify-center px-3 h-7 rounded-sm border border-[#d0d0d0] text-[11px] font-semibold text-[#003366] bg-[#ffffff]">
-              VISA
+            <span className="inline-flex items-center justify-center px-3 h-7 rounded-sm border border-[#d0d0d0] bg-[#ffffff]">
+              <Image
+                src={visa}
+                alt="VISA"
+                width={40}
+                height={20}
+                className="object-contain"
+              />
             </span>
-            <span className="inline-flex items-center justify-center px-3 h-7 rounded-sm border border-[#d0d0d0] text-[11px] font-semibold text-[#c13526] bg-[#ffffff]">
-              Mastercard
+            <span className="inline-flex items-center justify-center px-3 h-7 rounded-sm border border-[#d0d0d0] bg-[#ffffff]">
+              <Image
+                src={mastercard}
+                alt="Mastercard"
+                width={40}
+                height={20}
+                className="object-contain"
+              />
             </span>
-            <span className="inline-flex items-center justify-center px-3 h-7 rounded-sm border border-[#d0d0d0] text-[11px] font-semibold text-[#0070ba] bg-[#ffffff]">
-              PayPal
+            <span className="inline-flex items-center justify-center px-3 h-7 rounded-sm border border-[#d0d0d0] bg-[#ffffff]">
+              <Image
+                src={paypallogo}
+                alt="PayPal"
+                width={40}
+                height={20}
+                className="object-contain"
+              />
             </span>
           </div>
         </details>
@@ -154,14 +194,7 @@ export default function Footer() {
             >
               Privacy Policy
             </Link>
-            <button className="flex justify-end md:items-center gap-2 text-[12px] hover:underline mt-2 md:mt-0">
-              <span className="inline-flex w-6 h-4 border border-white overflow-hidden">
-                <span className="w-full h-full bg-[linear-gradient(90deg,#012169_0,#012169_100%)] relative">
-                  <span className="absolute inset-0 bg-[conic-gradient(from_45deg,#fff_0_25%,transparent_25_50%,#fff_50_75%,transparent_75_100%)] opacity-80" />
-                </span>
-              </span>
-              <span>EN</span>
-            </button>
+            
           </div>
         </div>
       </div>

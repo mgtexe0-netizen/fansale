@@ -38,7 +38,7 @@ model Listing {
   ticketType  String
   row         String?
   seatNumbers String?
-
+description String?
   originalPricePerTicket Float?
   serviceFeePerTicket    Float?
   deliveryMethod         String

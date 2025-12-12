@@ -11,6 +11,7 @@ interface Listing {
   ticketType: string;
   row: string;
   seatNumbers: string;
+  description: string
   deliveryMethod: string;
   originalPricePerTicket: number | null;
   serviceFeePerTicket: number | null;
@@ -37,6 +38,7 @@ export default function CreateEvent() {
       ticketType: "",
       row: "",
       seatNumbers: "",
+      description: "",
       deliveryMethod: "Eventim",
       originalPricePerTicket: null,
       serviceFeePerTicket: null,
@@ -93,6 +95,7 @@ export default function CreateEvent() {
       {
         ticketType: "",
         row: "",
+        description: "",
         seatNumbers: "",
         deliveryMethod: "Eventim",
         originalPricePerTicket: null,
@@ -128,11 +131,13 @@ export default function CreateEvent() {
       const res = await axios.post("/api/admin/event", payload); // ✅ Sends payload directly
 
       // console.log(res.data);
-      toast.success("Sucess");
+      toast.success("Successfully created");
       // router.push(`/tickets/all/${res.data.event.slug}`);
     } catch (error: any) {
-    toast.error(error || "Something went wrong")
-    } finally {
+const msg =
+  error?.response?.data?.message || error?.message || "Something went wrong";
+
+toast.error(String(msg));    } finally {
       setLoading(false);
     }
   };
@@ -284,6 +289,17 @@ export default function CreateEvent() {
                 onChange={(e) => handleListingChange(index, e)}
               />
 
+              <div>
+                <label htmlFor="Description"></label>
+                <textarea
+                  name="description"
+                  placeholder="Ticket Description"
+                  className="input"
+                  value={listing.description}
+                  onChange={(e) => handleListingChange(index, e)}
+                />
+              </div>
+
               <input
                 type="datetime-local"
                 name="expiresAt"
@@ -325,6 +341,8 @@ export default function CreateEvent() {
         >
           {loading ? "Creating Event..." : "Create Event"}
         </Button>
+
+       
       </form>
 
       <style>{`

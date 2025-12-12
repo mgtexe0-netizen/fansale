@@ -48,6 +48,7 @@ export async function POST(req: Request) {
           ticketType: l.ticketType,
           row: l.row ?? null,
           seatNumbers: l.seatNumbers ?? null,
+          description: l.description ?? null,
 
           originalPricePerTicket:
             l.originalPricePerTicket != null

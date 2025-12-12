@@ -13,10 +13,9 @@ export default function OverviewPage() {
             Here's what's happening with your event
           </p>
         </div>
-        <Button className="px-6 py-3 transition-all flex items-center gap-2 shadow-lg bg-pilot-purple-primary">
+        {/* <Button className="px-6 py-3 transition-all flex items-center gap-2 shadow-lg bg-pilot-purple-primary">
           <Plus className="w-5 h-5" />
-          Generate Post
-        </Button>
+Create event        </Button> */}
       </div>
 
      
