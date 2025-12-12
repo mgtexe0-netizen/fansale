@@ -294,7 +294,7 @@ export default function Footer() {
               aria-label="fanSALE Italy"
               title="fanSALE Italy"
             >
-              <Image src={language} alt="Language" width={18} height={18} />
+              {/* <Image src={language} alt="Language" width={18} height={18} /> */}
             </Link>
           </div>
         </div>
