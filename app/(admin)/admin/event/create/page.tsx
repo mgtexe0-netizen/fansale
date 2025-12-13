@@ -186,7 +186,6 @@ export default function CreateEvent() {
           if (it.basePrice == null || Number.isNaN(it.basePrice)) {
             throw new Error("Each variant must have a valid seat price.");
           }
-       
         }
       }
 
@@ -194,7 +193,8 @@ export default function CreateEvent() {
       await axios.post("/api/admin/event", payload);
 
       toast.success("Event Successfully created");
-      // router.push(`/tickets/all/${eventData.slug}`);
+      router.refresh(); 
+
     } catch (error: any) {
       const msg =
         error?.response?.data?.message ||

@@ -5,6 +5,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { prisma } from "@/lib/prisma";
 
+export const revalidate = 30;
+
 async function getAllEvents() {
 const events = await prisma.event.findMany({
   orderBy: { date: "asc" },
