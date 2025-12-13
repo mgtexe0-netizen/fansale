@@ -49,9 +49,8 @@ export async function POST(req: Request) {
               create: items.map((it: any) => ({
                 row: it.row ?? null,
                 seatNumber: it.seatNumber ?? null,
-                description: it.description ?? null,
+                // description: it.description ?? null,
                 basePrice: Number(it.basePrice),
-                quantity: Number(it.quantity ?? 1), // ✅ NEW
               })),
             },
           };

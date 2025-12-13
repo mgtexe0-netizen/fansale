@@ -11,15 +11,14 @@ type ListingItem = {
   row: string;
   seatNumber: string;
   basePrice: number | null;
-  description: string;
-  quantity: number; // ✅ NEW
+  // description: string;
 };
 
 type Listing = {
   ticketType: string;
   description: string;
   deliveryMethod: string;
-  serviceFeePerTicket: number; // ✅ required (use 0 if none)
+  serviceFeePerTicket: number; 
   isPurchasable: boolean;
   expiresAt: string;
   items: ListingItem[];
@@ -43,8 +42,7 @@ export default function CreateEvent() {
     row: "",
     seatNumber: "",
     basePrice: null,
-    description: "",
-    quantity: 1,
+    // description: "",
   };
 
   const [listings, setListings] = useState<Listing[]>([
@@ -188,16 +186,14 @@ export default function CreateEvent() {
           if (it.basePrice == null || Number.isNaN(it.basePrice)) {
             throw new Error("Each variant must have a valid seat price.");
           }
-          if (!it.quantity || it.quantity < 1) {
-            throw new Error("Each variant must have quantity >= 1.");
-          }
+       
         }
       }
 
       const payload = { ...eventData, listings };
       await axios.post("/api/admin/event", payload);
 
-      toast.success("Successfully created");
+      toast.success("Event Successfully created");
       // router.push(`/tickets/all/${eventData.slug}`);
     } catch (error: any) {
       const msg =
@@ -435,22 +431,9 @@ export default function CreateEvent() {
                       />
                     </div>
 
-                    <div>
-                      <label className="text-sm font-medium">Quantity</label>
-                      <input
-                        type="number"
-                        name="quantity"
-                        min={1}
-                        step="1"
-                        className="input"
-                        value={it.quantity}
-                        onChange={(e) =>
-                          handleItemChange(listingIndex, itemIndex, e)
-                        }
-                      />
-                    </div>
+                
 
-                    <div className="col-span-2">
+                    {/* <div className="col-span-2">
                       <label className="text-sm font-medium">
                         Variant description (optional)
                       </label>
@@ -463,7 +446,7 @@ export default function CreateEvent() {
                           handleItemChange(listingIndex, itemIndex, e)
                         }
                       />
-                    </div>
+                    </div> */}
 
                     <div className="col-span-2 flex justify-end">
                       <button
