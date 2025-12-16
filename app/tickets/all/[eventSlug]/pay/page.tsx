@@ -27,8 +27,6 @@ export default function Page() {
     Array.from({ length: Math.max(qty, 0) }, () => "")
   );
 
-  // If user refreshes and qty changes, you can optionally re-sync:
-  // (simple approach: keep it as-is; but this ensures correct length)
   React.useEffect(() => {
     setNames((prev) => {
       const next = Array.from(
@@ -42,11 +40,9 @@ export default function Page() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    // basic validation
     const trimmed = names.map((n) => n.trim());
     if (trimmed.some((n) => !n)) return;
 
-    // store both ids + names (if ids exist)
     localStorage.setItem(
       "ticketOwners",
       JSON.stringify({
@@ -56,7 +52,8 @@ export default function Page() {
       })
     );
 
-
+    // If you want to navigate after saving, uncomment and set your route:
+    // router.push("/payment");
   };
 
   return (
@@ -65,14 +62,16 @@ export default function Page() {
         <form onSubmit={handleSubmit} className="space-y-4">
           {qty <= 0 ? (
             <p className="text-sm text-gray-600">
-              No tickets selected. Please go back and select tickets.
+              Nessun biglietto selezionato. Torna indietro e seleziona i
+              biglietti.
             </p>
           ) : (
             <>
               {names.map((value, idx) => (
                 <div key={idx}>
                   <label className="block text-xs md:text-sm font-medium text-[#333] mb-2">
-                    Ticket owner full name (Ticket {idx + 1})
+                    Nome e cognome del titolare del biglietto (Biglietto{" "}
+                    {idx + 1})
                   </label>
                   <input
                     type="text"
@@ -87,7 +86,7 @@ export default function Page() {
                       });
                     }}
                     className="w-full px-4 py-3 border border-gray-300 text-xs md:text-sm focus:outline-none focus:ring-2 focus:ring-[#003399] focus:border-transparent"
-                    placeholder="Enter full name (e.g. John Doe)"
+                    placeholder="Inserisci nome e cognome (es. Mario Rossi)"
                   />
                 </div>
               ))}
@@ -97,7 +96,7 @@ export default function Page() {
                 className="w-full bg-fns-primary text-white py-3 text-xs md:text-sm font-semibold transition-colors mt-6 disabled:opacity-60"
                 disabled={qty <= 0 || names.some((n) => !n.trim())}
               >
-                Continue to Payment
+                Continua al pagamento
               </button>
             </>
           )}

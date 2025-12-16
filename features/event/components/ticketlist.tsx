@@ -47,8 +47,8 @@ export function TicketList({
     const parts: string[] = [];
     parts.push("Circle Block 4");
     const row = items.find((it: any) => it.row)?.row;
-    if (row) parts.push(`Row ${row}`);
-    if (seats) parts.push(`Seat ${seats}`);
+    if (row) parts.push(`Fila ${row}`);
+    if (seats) parts.push(`Posto ${seats}`);
     parts.push("Circle");
     return parts.join(" | ");
   };
@@ -56,8 +56,8 @@ export function TicketList({
   const formatVariantLine = (it: any) => {
     const parts: string[] = [];
     parts.push("Circle Block 4");
-    if (it.row) parts.push(`Row ${it.row}`);
-    if (it.seatNumber) parts.push(`Seat ${it.seatNumber}`);
+    if (it.row) parts.push(`Fila ${it.row}`);
+    if (it.seatNumber) parts.push(`Posto ${it.seatNumber}`);
     parts.push("Circle");
     return parts.join(" | ");
   };
@@ -71,13 +71,11 @@ export function TicketList({
   const calcTotals = (listing: any) => {
     const selected = getSelectedItems(listing);
 
-    // ✅ qty is sum of variant quantities
     const qty = selected.reduce(
       (s: number, it: any) => s + Number(it.quantity ?? 1),
       0
     );
 
-    // ✅ base total is basePrice * quantity
     const totalBase = selected.reduce(
       (sum: number, it: any) =>
         sum + Number(it.basePrice || 0) * Number(it.quantity ?? 1),
@@ -121,8 +119,8 @@ export function TicketList({
     await new Promise((resolve) => setTimeout(resolve, 300));
 
     const params = new URLSearchParams();
-    params.set("qty", String(qty)); // ✅ total selected quantity (sum of variant quantities)
-    params.set("items", selectedIds.join(",")); // ✅ selected variant ids
+    params.set("qty", String(qty));
+    params.set("items", selectedIds.join(","));
 
     router.push(`/tickets/all/${eventSlug}/pay?${params.toString()}`);
     setIsCheckingOut(false);
@@ -133,7 +131,6 @@ export function TicketList({
       {listingsSorted.map((listing: any) => {
         const items = Array.isArray(listing.items) ? listing.items : [];
 
-        // ✅ backend offer quantity = sum of ALL item quantities
         const backendQty = items.reduce(
           (s: number, it: any) => s + Number(it.quantity ?? 1),
           0
@@ -149,15 +146,15 @@ export function TicketList({
 
         return (
           <div key={listing.id} className="border-[#e5e5e5] mt-1">
-            {/* collapsed row */}
+            {/* riga chiusa */}
             <div
               className="flex gap-2 text-[13px] px-2 cursor-pointer"
               onClick={() => setOpenId(isOpen ? null : listing.id)}
             >
-              {/* Quantity (read-only from backend) */}
+              {/* Quantità (solo lettura) */}
               <div className="border-r md:ml-2 border-[#e5e5e5] py-3 text-center w-[74px]">
                 <div className="text-[11px] md:text-[14px] font-medium text-[#555] mb-1">
-                  Quantity
+                  Quantità
                 </div>
                 <div className="text-[15px] leading-[20px] font-semibold text-[#333]">
                   {backendQty}
@@ -171,7 +168,7 @@ export function TicketList({
 
                 <div className="flex items-center gap-2">
                   <div className="text-[12px] md:text-[14px] font-normal md:font-medium text-fns-primary">
-                    <span>Fixed price</span> {formatMoney(totalFix)}
+                    <span>Prezzo fisso</span> {formatMoney(totalFix)}
                   </div>
 
                   <div className="ml-auto flex items-center gap-2 pr-1">
@@ -187,7 +184,7 @@ export function TicketList({
               </div>
             </div>
 
-            {/* expanded */}
+            {/* espanso */}
             {isOpen && (
               <div className="border-t">
                 <div className="bg-white">
@@ -215,11 +212,12 @@ export function TicketList({
 
                           <div className="text-[12px] text-[#666] mt-1">
                             <span>
-                              {listing.ticketType || "Full Price Ticket"}
+                              {listing.ticketType ||
+                                "Biglietto a prezzo intero"}
                             </span>
                             <span> | </span>
                             <span>
-                              Original price:{" "}
+                              Prezzo originale:{" "}
                               {formatMoney(Number(it.basePrice || 0))}
                             </span>
                           </div>
@@ -238,31 +236,31 @@ export function TicketList({
                 <div className="px-5 pb-4 pt-3 text-[12px] text-[#333] border-t border-[#e5e5e5]">
                   <div className="space-y-3">
                     <div className="flex justify-between text-[15px]">
-                      <span>Selected number of tickets:</span>
+                      <span>Numero di biglietti selezionati:</span>
                       <span className="text-fns-primary">{selectedQty}</span>
                     </div>
 
                     <div className="flex justify-between text-[15px]">
-                      <span>Offer splitting:</span>
-                      <span>Total</span>
+                      <span>Suddivisione dell’offerta:</span>
+                      <span>Totale</span>
                     </div>
 
                     <div className="flex justify-between text-[15px]">
-                      <span>Tickets total:</span>
+                      <span>Totale biglietti:</span>
                       <span className="text-fns-primary">
                         {formatMoney(totalBase)}
                       </span>
                     </div>
 
                     <div className="flex justify-between text-[15px]">
-                      <span>Service fee:</span>
+                      <span>Commissione di servizio:</span>
                       <span className="text-fns-primary">
                         {formatMoney(totalFee)}
                       </span>
                     </div>
 
                     <div className="flex justify-between text-[15px]">
-                      <span>Ticket delivery by:</span>
+                      <span>Consegna biglietti tramite:</span>
                       <span className="text-fns-primary">
                         {listing.deliveryMethod || "Eventim"}
                       </span>
@@ -271,7 +269,7 @@ export function TicketList({
 
                   <div className="flex justify-between items-baseline mt-3">
                     <span className="font-semibold text-[#777] text-[20px]">
-                      Fix price:
+                      Prezzo fisso:
                     </span>
                     <span className="text-[16px] md:text-[20px] font-medium text-fns-primary">
                       {formatMoney(totalFix)}
@@ -279,13 +277,13 @@ export function TicketList({
                   </div>
 
                   <p className="text-[10px] text-[#777] text-right mt-0.5">
-                    incl. vat
+                    IVA inclusa
                   </p>
 
                   {listing.isPurchasable === false && (
                     <p className="mt-3 text-[12px] text-[#c92a2a]">
-                      The ticket(s) in this offer can&apos;t be purchased at the
-                      moment – please try again later.
+                      I biglietti di questa offerta non sono acquistabili al
+                      momento – riprova più tardi.
                     </p>
                   )}
 
@@ -295,22 +293,24 @@ export function TicketList({
                     className="bg-[#fabb01] text-white text-base font-medium w-full h-10 my-3 disabled:opacity-70 disabled:cursor-not-allowed relative"
                   >
                     {isCheckingOut
-                      ? "Processing..."
+                      ? "Elaborazione..."
                       : selectedQty === 0
-                      ? "SELECT TICKETS"
-                      : "CHECKOUT"}
+                      ? "SELEZIONA I BIGLIETTI"
+                      : "VAI AL PAGAMENTO"}
                   </button>
 
                   <div className="flex justify-between mt-2">
-                    <span className="font-medium text-[14px]">Seat type:</span>
+                    <span className="font-medium text-[14px]">
+                      Tipo di posto:
+                    </span>
                     <span className="text-fns-primary text-[14px]">
-                      Seat, Numbered
+                      Posto a sedere, numerato
                     </span>
                   </div>
 
                   {listing.description && (
                     <div className="mt-2 flex justify-between text-[12px]">
-                      <span className="text-sm">Description</span>
+                      <span className="text-sm">Descrizione</span>
                       <span className="text-fns-primary text-sm">
                         {listing.description}
                       </span>

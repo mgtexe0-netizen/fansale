@@ -6,25 +6,26 @@ import Link from "next/link";
 export default function EventHeader({ event }: { event: any }) {
   const eventDate = new Date(event.date);
 
-  const weekday = eventDate.toLocaleDateString("en-GB", {
+  // Italian locale
+  const weekday = eventDate.toLocaleDateString("it-IT", {
     weekday: "long",
   });
-  const dayPart = eventDate.toLocaleDateString("en-GB", {
+  const dayPart = eventDate.toLocaleDateString("it-IT", {
     day: "2-digit",
     month: "2-digit",
     year: "numeric",
   });
-  const timePart = eventDate.toLocaleTimeString("en-GB", {
+  const timePart = eventDate.toLocaleTimeString("it-IT", {
     hour: "2-digit",
     minute: "2-digit",
   });
 
   const lineText = `${weekday}, ${dayPart} ${timePart}, ${
     event.venue
-  }, ${event.city.toUpperCase()}`;
+  }, ${String(event.city).toUpperCase()}`;
 
   const breadcrumbLast = `${
-    event.city.split(" ").pop() ?? event.city.toUpperCase()
+    String(event.city).split(" ").pop() ?? String(event.city).toUpperCase()
   }, ${weekday.slice(0, 3)} ${dayPart}`;
 
   return (
@@ -34,14 +35,14 @@ export default function EventHeader({ event }: { event: any }) {
         <span className="text-[#003366]">fanSALE</span>
         <span className="mx-1">›</span>
         <Link href="/concerts" className="text-[#003366] hover:underline">
-          Concerts
+          Concerti
         </Link>
         <span className="mx-1">›</span>
         <Link
           href="/concerts/country-and-folk"
           className="text-[#003366] hover:underline"
         >
-          Country and Folk
+          Country e Folk
         </Link>
         <span className="mx-1">›</span>
         <span className="text-[#003366]">Nashville in Concert</span>

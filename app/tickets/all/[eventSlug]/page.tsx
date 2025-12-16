@@ -9,7 +9,6 @@ import mapimg from "../../../../public/map.png";
 import locationicon from "../../../../public/mapicon.png";
 import locationicon2 from "../../../../public/location.png";
 
-
 type PageProps = {
   params: Promise<{ eventSlug: string }>;
 };
@@ -17,7 +16,7 @@ type PageProps = {
 export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
-  const { eventSlug } = await params; 
+  const { eventSlug } = await params;
 
   const event = await prisma.event.findUnique({
     where: { slug: eventSlug },
@@ -29,18 +28,19 @@ export async function generateMetadata({
   });
 
   if (!event) {
-    return { title: "Event not found | fanSALE" };
+    return { title: "Evento non trovato | fanSALE" };
   }
 
-  const description = `Buy and sell tickets for ${event.title}${
-    event.venue ? ` at ${event.venue}` : ""
-  }${event.city ? `, ${event.city}` : ""}. Secure resale via fanSALE.`;
+  const description = `Compra e vendi biglietti per ${event.title}${
+    event.venue ? ` presso ${event.venue}` : ""
+  }${event.city ? `, ${event.city}` : ""}. Rivendita sicura tramite fanSALE.`;
 
   return {
-    title: `${event.title} Tickets | fanSALE`,
+    title: `Biglietti ${event.title} | fanSALE`,
     description,
   };
 }
+
 async function getEvent(eventSlug: string) {
   return prisma.event.findUnique({
     where: { slug: eventSlug },
@@ -48,16 +48,15 @@ async function getEvent(eventSlug: string) {
       listings: {
         where: { status: "available" },
         include: {
-          items: true, 
+          items: true,
         },
       },
     },
   });
 }
 
-
 export default async function EventPage({ params }: PageProps) {
-  const { eventSlug } = await params; 
+  const { eventSlug } = await params;
   const event = await getEvent(eventSlug);
 
   if (!event) notFound();
@@ -68,7 +67,7 @@ export default async function EventPage({ params }: PageProps) {
 
       <div className="max-w-[1150px] mx-auto mt-4 bg-white border border-[#d7d7d7] shadow-sm block md:hidden">
         <div className="px-4 pt-3 text-[24px] font-normal text-[#003366]">
-          Seat map
+          Mappa dei posti
         </div>
 
         <div className="h-[260px] flex items-center justify-center">
@@ -83,64 +82,66 @@ export default async function EventPage({ params }: PageProps) {
 
         <div className="border-t border-[#e5e5e5] px-4 py-2 text-[13px] text-[#575656] flex items-center gap-10">
           <div className="flex items-center hidden md:block">
-            <span>Selected seats </span> <img src={locationicon.src} alt="" />
+            <span>Posti selezionati </span>{" "}
+            <img src={locationicon.src} alt="" />
           </div>{" "}
           <div className="flex items-center">
-            <span className="font-bold">Available offers</span>
+            <span className="font-bold">Offerte disponibili</span>
             <img className="w-5" src={locationicon2.src} alt="" />
           </div>{" "}
         </div>
       </div>
 
-      {/* Tickets + DESKTOP seat map (inside TicketCard) */}
+      {/* Biglietti + mappa posti DESKTOP (dentro TicketCard) */}
       <TicketCard eventSlug={event.slug} listings={event.listings} />
 
       <div className="flex flex-col gap-3">
         <div className="mx-auto mt-8 bg-white border border-[#d7d7d7] shadow-lg px-6 py-4">
           <h2 className="text-fns-primary mb-2 text-2xl font-medium">
-            Search agent
+            Agente di ricerca
           </h2>
           <hr className="my-3" />
           <p className="text-sm">
-            Is there nothing suitable for you? Our search agent informs you as
-            soon as suitable offers for your desired event are available on
-            fanSALE. Simply set up your search criteria and receive suitable
-            offers by e-mail at the desired interval.{" "}
+            Non c’è nulla di adatto per te? Il nostro agente di ricerca ti
+            avvisa non appena sono disponibili offerte adatte per il tuo evento
+            desiderato su fanSALE. Imposta semplicemente i tuoi criteri di
+            ricerca e ricevi le offerte via e-mail con l’intervallo desiderato.{" "}
             <span className="text-fns-primary font-semibold">
-              Create a search agent
+              Crea un agente di ricerca
             </span>
           </p>
         </div>
 
         <div className="mx-auto bg-white border border-[#d7d7d7] shadow-lg px-6 py-4">
           <h2 className="text-fns-primary mb-2 text-2xl font-medium">
-            Sell tickets
+            Vendi biglietti
           </h2>
           <hr className="my-3" />
           <p className="text-sm">
-            You bought tickets for Nashville In Concert: The Encore Tour at
-            Friday, 13/02/2026 19:00, Eventim Apollo, W6 9QH LONDON but don't
-            have time to go? No problem: with fanSALE you can simply, quickly
-            and securely sell your admission tickets through Eventim&apos;s
-            online ticket market. In this way, you can sell your tickets legally
-            and respectably to true fans, even for sold-out events.
+            Hai acquistato biglietti per Nashville In Concert: The Encore Tour
+            venerdì, 13/02/2026 19:00, Eventim Apollo, W6 9QH LONDON ma non hai
+            tempo per andare? Nessun problema: con fanSALE puoi vendere i tuoi
+            biglietti d’ingresso in modo semplice, rapido e sicuro tramite il
+            mercato online di Eventim. In questo modo, puoi vendere i tuoi
+            biglietti legalmente e in modo affidabile a veri fan, anche per
+            eventi sold-out.
             <span className="text-fns-primary font-semibold">
               {" "}
-              Sell tickets
+              Vendi biglietti
             </span>
           </p>
         </div>
 
         <div className="mx-auto bg-white border border-[#d7d7d7] shadow-lg px-6 py-4">
           <h4 className="text-fns-primary mb-2 font-bold text-[14px]">
-            Our Recommendations
+            I nostri consigli
           </h4>
           <p className="text-sm text-fns-primary font-medium leading-loose">
-            Riverdance Tickets | Inside No. 9 Stage/Fright Tickets | The Girls
-            Bathroom Tickets | Greg Davies Tickets | Stardew Valley: Symphony of
-            Seasons Tickets | Leon Thomas Tickets | Ray Lamontagne Tickets |
-            Louis C.K. Tickets | Chris Ramsey Tickets | Nashville in Concert
-            Tickets
+            Biglietti Riverdance | Biglietti Inside No. 9 Stage/Fright |
+            Biglietti The Girls Bathroom | Biglietti Greg Davies | Stardew
+            Valley: Symphony of Seasons | Biglietti Leon Thomas | Biglietti Ray
+            Lamontagne | Biglietti Louis C.K. | Biglietti Chris Ramsey |
+            Biglietti Nashville in Concert
           </p>
         </div>
       </div>
