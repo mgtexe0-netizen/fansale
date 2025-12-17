@@ -39,7 +39,7 @@ export default function MainNavbar() {
           >
             <input
               type="text"
-              placeholder="Search for event, artist, location"
+              placeholder="Cerca evento, artista, luogo"
               className="w-full h-[32px] rounded-none border border-[#c4c4c4] bg-white px-3 text-[13px] text-[#333] placeholder:text-[#999] focus:outline-none focus:ring-0"
             />
             <button
@@ -68,7 +68,7 @@ export default function MainNavbar() {
               rel="noopener noreferrer"
               className="px-5 inline-flex items-center justify-center bg-[#074477] hover:bg-[#0b578f] text-[13px] font-semibold rounded-none h-[32px]"
             >
-              Sell
+              Vendi
             </Link>
 
             <Link
@@ -77,7 +77,7 @@ export default function MainNavbar() {
               rel="noopener noreferrer"
               className="px-5 inline-flex items-center justify-center bg-[#074477] hover:bg-[#0b578f] text-[13px] font-semibold rounded-none h-[32px]"
             >
-              Login
+              Accedi
             </Link>
 
             <Link
@@ -117,7 +117,7 @@ export default function MainNavbar() {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-[40px] h-[32px] bg-white flex items-center justify-center text-[#002b55]"
-                aria-label="Search on fanSALE Italy"
+                aria-label="Cerca su fanSALE Italia"
               >
                 <svg
                   aria-hidden="true"
@@ -138,7 +138,7 @@ export default function MainNavbar() {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-[48px] h-[32px] bg-[#074477] flex flex-col items-center justify-center leading-none"
-                aria-label="Menu on fanSALE Italy"
+                aria-label="Menu su fanSALE Italia"
               >
                 <span className="mb-[1px]">
                   <span className="block w-4 h-[2px] bg-white mb-[3px]" />
@@ -160,7 +160,7 @@ export default function MainNavbar() {
           >
             <input
               type="text"
-              placeholder="Search for event, artist, location"
+              placeholder="Cerca evento, artista, luogo"
               className="w-full h-[32px] rounded-none border border-[#c4c4c4] bg-white pl-3 pr-8 text-[13px] text-[#333] placeholder:text-[#999] focus:outline-none focus:ring-0"
             />
             <button
@@ -189,7 +189,7 @@ export default function MainNavbar() {
               rel="noopener noreferrer"
               className="flex-1 h-[32px] bg-[#074477] hover:bg-[#0b578f] text-center text-[13px] font-semibold flex items-center justify-center"
             >
-              Sell
+              Vendi
             </Link>
             <Link
               href={EXT.login}
@@ -197,7 +197,7 @@ export default function MainNavbar() {
               rel="noopener noreferrer"
               className="flex-1 h-[32px] bg-[#074477] hover:bg-[#0b578f] text-center text-[13px] font-semibold flex items-center justify-center"
             >
-              Login
+              Accedi
             </Link>
           </div>
         </div>
