@@ -28,7 +28,7 @@ export default function Footer() {
           <div className="grid grid-cols-1 md:grid-cols-3 ml-10 gap-10 text-[13px] text-[#333]">
             <div>
               <h3 className="font-bold mb-2 text-[15px] text-fns-primary">
-                About us
+                Chi siamo
               </h3>
               <ul className="space-y-1 text-[14px] list-disc list-inside font-medium text-fns-primary">
                 <li>
@@ -38,7 +38,7 @@ export default function Footer() {
                     rel="noopener noreferrer"
                     className="hover:underline"
                   >
-                    Contact
+                    Contatto
                   </Link>
                 </li>
                 <li>
@@ -48,7 +48,7 @@ export default function Footer() {
                     rel="noopener noreferrer"
                     className="hover:underline"
                   >
-                    More information
+                    Maggiori informazioni
                   </Link>
                 </li>
                 <li>
@@ -58,14 +58,14 @@ export default function Footer() {
                     rel="noopener noreferrer"
                     className="hover:underline"
                   >
-                    Top artists
+                    Artisti principali
                   </Link>
                 </li>
               </ul>
             </div>
 
             <div>
-              <h3 className="font-bold mb-2 text-[15px]">Help</h3>
+              <h3 className="font-bold mb-2 text-[15px]">Aiuto</h3>
               <ul className="space-y-1 text-[14px] list-disc list-inside font-medium text-fns-primary">
                 <li>
                   <Link
@@ -74,7 +74,7 @@ export default function Footer() {
                     rel="noopener noreferrer"
                     className="hover:underline"
                   >
-                    Purchaser FAQs
+                    FAQ Acquirenti
                   </Link>
                 </li>
                 <li>
@@ -84,7 +84,7 @@ export default function Footer() {
                     rel="noopener noreferrer"
                     className="hover:underline"
                   >
-                    Seller FAQs
+                    FAQ Venditori
                   </Link>
                 </li>
               </ul>
@@ -92,7 +92,7 @@ export default function Footer() {
 
             <div className="md:text-left">
               <h3 className="font-bold mb-2 text-[15px] text-fns-primary">
-                Payment methods
+                Metodi di pagamento
               </h3>
 
               <Link
@@ -140,7 +140,7 @@ export default function Footer() {
       <div className="md:hidden bg-white max-w-md mx-auto mb-5 border shadow-lg">
         <details className="border-b">
           <summary className="flex items-center justify-between px-6 py-4 cursor-pointer font-bold text-[15px] text-fns-primary">
-            About us
+            Chi siamo
             <ChevronRight className="w-5 h-5" />
           </summary>
           <ul className="px-6 pb-4 space-y-2 text-[14px] list-disc list-inside font-medium text-fns-primary">
@@ -151,7 +151,7 @@ export default function Footer() {
                 rel="noopener noreferrer"
                 className="hover:underline"
               >
-                Contact
+                Contatto
               </Link>
             </li>
             <li>
@@ -161,7 +161,7 @@ export default function Footer() {
                 rel="noopener noreferrer"
                 className="hover:underline"
               >
-                More information
+                Maggiori informazioni
               </Link>
             </li>
             <li>
@@ -171,7 +171,7 @@ export default function Footer() {
                 rel="noopener noreferrer"
                 className="hover:underline"
               >
-                Top artists
+                Artisti principali
               </Link>
             </li>
           </ul>
@@ -179,7 +179,7 @@ export default function Footer() {
 
         <details className="border-b">
           <summary className="flex items-center justify-between px-6 py-4 cursor-pointer font-bold text-[15px] text-fns-primary">
-            Help
+            Aiuto
             <ChevronRight className="w-5 h-5" />
           </summary>
           <ul className="px-6 pb-4 space-y-2 text-[14px] list-disc list-inside font-medium text-fns-primary">
@@ -190,7 +190,7 @@ export default function Footer() {
                 rel="noopener noreferrer"
                 className="hover:underline"
               >
-                Purchaser FAQs
+                FAQ Acquirenti
               </Link>
             </li>
             <li>
@@ -200,7 +200,7 @@ export default function Footer() {
                 rel="noopener noreferrer"
                 className="hover:underline"
               >
-                Seller FAQs
+                FAQ Venditori
               </Link>
             </li>
           </ul>
@@ -208,7 +208,7 @@ export default function Footer() {
 
         <details className="border-b">
           <summary className="flex items-center justify-between px-6 py-4 cursor-pointer font-bold text-[15px] text-fns-primary">
-            Payment methods
+            Metodi di pagamento
             <ChevronRight className="w-5 h-5" />
           </summary>
 
@@ -261,7 +261,7 @@ export default function Footer() {
               rel="noopener noreferrer"
               className="hover:underline text-white whitespace-nowrap"
             >
-              Legal notice
+              Note legali
             </Link>
             <span className="text-white hidden md:inline">|</span>
 
@@ -271,7 +271,7 @@ export default function Footer() {
               rel="noopener noreferrer"
               className="hover:underline whitespace-nowrap"
             >
-              Terms and Conditions
+              Termini e Condizioni
             </Link>
 
             <span className="text-[#20466c] hidden md:inline">|</span>
@@ -282,19 +282,18 @@ export default function Footer() {
               rel="noopener noreferrer"
               className="hover:underline whitespace-nowrap"
             >
-              Privacy Policy
+              Informativa sulla Privacy
             </Link>
 
-            {/* optional language icon link to fansale.it home */}
             <Link
               href="https://www.fansale.it/"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2"
-              aria-label="fanSALE Italy"
-              title="fanSALE Italy"
+              aria-label="fanSALE Italia"
+              title="fanSALE Italia"
             >
-              {/* <Image src={language} alt="Language" width={18} height={18} /> */}
+              {/* <Image src={language} alt="Lingua" width={18} height={18} /> */}
             </Link>
           </div>
         </div>
