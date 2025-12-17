@@ -3,8 +3,8 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { prisma } from "@/lib/prisma";
-import EventHeader from "@/features/event/components/header";
-import { TicketCard } from "@/features/event/components/ticket-card";
+import EventHeader from "@/features/event/tix/components/header";
+import { TicketCard } from "@/features/event/tix/components/ticket-card";
 import mapimg from "../../../../public/map.png";
 import locationicon from "../../../../public/mapicon.png";
 import locationicon2 from "../../../../public/location.png";

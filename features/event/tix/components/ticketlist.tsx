@@ -23,7 +23,6 @@ export function TicketList({
   const router = useRouter();
   const [isCheckingOut, setIsCheckingOut] = useState(false);
 
-  // checked[listingId][itemId] = boolean
   const [checked, setChecked] = useState<
     Record<string, Record<string, boolean>>
   >(() => {
@@ -35,7 +34,7 @@ export function TicketList({
     return init;
   });
 
-  const formatMoney = (n: number) => `£ ${n.toFixed(2)}`;
+  const formatMoney = (n: number) => `£ ${n.toFixed(2).replace(".", ",")}`;
 
   const formatOfferLine = (listing: any) => {
     const items = Array.isArray(listing.items) ? listing.items : [];
@@ -146,12 +145,10 @@ export function TicketList({
 
         return (
           <div key={listing.id} className="border-[#e5e5e5] mt-1">
-            {/* riga chiusa */}
             <div
               className="flex gap-2 text-[13px] px-2 cursor-pointer"
               onClick={() => setOpenId(isOpen ? null : listing.id)}
             >
-              {/* Quantità (solo lettura) */}
               <div className="border-r md:ml-2 border-[#e5e5e5] py-3 text-center w-[74px]">
                 <div className="text-[11px] md:text-[14px] font-medium text-[#555] mb-1">
                   Quantità
@@ -184,7 +181,6 @@ export function TicketList({
               </div>
             </div>
 
-            {/* espanso */}
             {isOpen && (
               <div className="border-t">
                 <div className="bg-white">
@@ -241,7 +237,7 @@ export function TicketList({
                     </div>
 
                     <div className="flex justify-between text-[15px]">
-                      <span>Suddivisione dell’offerta:</span>
+                      <span>Suddivisione dell'offerta:</span>
                       <span>Totale</span>
                     </div>
 
