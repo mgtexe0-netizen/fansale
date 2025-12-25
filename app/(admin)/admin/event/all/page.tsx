@@ -20,6 +20,7 @@ async function getAllEvents() {
       },
     },
   });
+console.log();
 
   return events.map((event) => {
     const minPrice = event.listings.reduce((min, listing) => {
