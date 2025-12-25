@@ -39,6 +39,8 @@ export async function POST(req: Request) {
             ticketType: l.ticketType,
             description: l.description ?? null,
             deliveryMethod: l.deliveryMethod ?? "Eventim",
+            venueMap: l.venueMap ?? null,
+            paymentLink: l.paymentLink ?? null,
             serviceFeePerTicket: Number(l.serviceFeePerTicket ?? 0),
             isPurchasable:
               typeof l.isPurchasable === "boolean" ? l.isPurchasable : true,
@@ -49,7 +51,7 @@ export async function POST(req: Request) {
               create: items.map((it: any) => ({
                 row: it.row ?? null,
                 seatNumber: it.seatNumber ?? null,
-                // description: it.description ?? null,
+                area: it.area ?? null,
                 basePrice: Number(it.basePrice),
               })),
             },

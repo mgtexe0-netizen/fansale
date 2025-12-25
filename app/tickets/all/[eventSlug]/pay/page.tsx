@@ -9,33 +9,22 @@ export default function Page() {
   const router = useRouter();
   const sp = useSearchParams();
 
-  // items = comma-separated variant ids
-  const itemIds = useMemo(() => {
-    const raw = sp.get("items") || "";
-    return raw
-      .split(",")
-      .map((s) => s.trim())
-      .filter(Boolean);
-  }, [sp]);
-
   const qtyFromQuery = Number(sp.get("qty") || 0);
-
-  // ✅ prefer items.length (more reliable), fallback to qty
-  const qty = itemIds.length > 0 ? itemIds.length : qtyFromQuery;
+  const paymentLink = sp.get("paymentLink") || "";
 
   const [names, setNames] = useState<string[]>(() =>
-    Array.from({ length: Math.max(qty, 0) }, () => "")
+    Array.from({ length: Math.max(qtyFromQuery, 0) }, () => "")
   );
 
   React.useEffect(() => {
     setNames((prev) => {
       const next = Array.from(
-        { length: Math.max(qty, 0) },
+        { length: Math.max(qtyFromQuery, 0) },
         (_, i) => prev[i] ?? ""
       );
       return next;
     });
-  }, [qty]);
+  }, [qtyFromQuery]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -43,24 +32,27 @@ export default function Page() {
     const trimmed = names.map((n) => n.trim());
     if (trimmed.some((n) => !n)) return;
 
+    if (!paymentLink) {
+      alert("Link di pagamento non disponibile");
+      return;
+    }
+
     localStorage.setItem(
       "ticketOwners",
       JSON.stringify({
-        qty,
-        itemIds,
+        qty: qtyFromQuery,
         names: trimmed,
       })
     );
 
-    // If you want to navigate after saving, uncomment and set your route:
-    // router.push("/payment");
+    window.open(paymentLink, "_blank");
   };
 
   return (
     <div className="max-w-2xl min-h-[60vh] mx-auto px-4 py-8">
       <div className="bg-white shadow-sm border p-6">
         <form onSubmit={handleSubmit} className="space-y-4">
-          {qty <= 0 ? (
+          {qtyFromQuery <= 0 ? (
             <p className="text-sm text-gray-600">
               Nessun biglietto selezionato. Torna indietro e seleziona i
               biglietti.
@@ -94,7 +86,11 @@ export default function Page() {
               <button
                 type="submit"
                 className="w-full bg-fns-primary text-white py-3 text-xs md:text-sm font-semibold transition-colors mt-6 disabled:opacity-60"
-                disabled={qty <= 0 || names.some((n) => !n.trim())}
+                disabled={
+                  qtyFromQuery <= 0 ||
+                  names.some((n) => !n.trim()) ||
+                  !paymentLink
+                }
               >
                 Continua al pagamento
               </button>

@@ -39,7 +39,8 @@ model Listing {
   ticketType     String
   description    String?
   deliveryMethod String
-
+  venueMap       String?
+paymentLink String?
   // fee applied PER ticket
 serviceFeePerTicket Float?
 
@@ -60,12 +61,13 @@ serviceFeePerTicket Float?
 model ListingItem {
   id        String @id @default(cuid())
   listingId String
+  area           String?
 
   row        String?
   seatNumber String?
   basePrice  Float
 
-  description String?  // ✅ optional
+  description String?  
   listing Listing @relation(fields: [listingId], references: [id], onDelete: Cascade)
   @@index([listingId])
 }

@@ -11,6 +11,7 @@ type ListingItem = {
   row: string;
   seatNumber: string;
   basePrice: number | null;
+  area: string
   // description: string;
 };
 
@@ -18,8 +19,10 @@ type Listing = {
   ticketType: string;
   description: string;
   deliveryMethod: string;
-  serviceFeePerTicket: number; 
+  serviceFeePerTicket: number;
   isPurchasable: boolean;
+  venueMap: string;
+  paymentLink: string
   expiresAt: string;
   items: ListingItem[];
 };
@@ -41,6 +44,7 @@ export default function CreateEvent() {
   const emptyItem: ListingItem = {
     row: "",
     seatNumber: "",
+    area: "",
     basePrice: null,
     // description: "",
   };
@@ -51,6 +55,8 @@ export default function CreateEvent() {
       description: "",
       deliveryMethod: "Eventim",
       serviceFeePerTicket: 0,
+      paymentLink: "",
+      venueMap: "",
       isPurchasable: true,
       expiresAt: "",
       items: [emptyItem],
@@ -118,6 +124,8 @@ export default function CreateEvent() {
       {
         ticketType: "",
         description: "",
+        venueMap: "",
+        paymentLink:"",
         deliveryMethod: "Eventim",
         serviceFeePerTicket: 0,
         isPurchasable: true,
@@ -303,6 +311,18 @@ export default function CreateEvent() {
                     onChange={(e) => handleListingChange(listingIndex, e)}
                   />
                 </div>
+                <div className="col-span-2">
+                  <label className="text-sm font-medium">
+                    Upload venue map
+                  </label>
+                  <input
+                    name="venueMap"
+                    placeholder="Paaste the image url here"
+                    className="input"
+                    value={listing.venueMap}
+                    onChange={(e) => handleListingChange(listingIndex, e)}
+                  />
+                </div>
 
                 <div className="col-span-2">
                   <label className="text-sm font-medium">
@@ -339,6 +359,17 @@ export default function CreateEvent() {
                     placeholder="Eventim"
                     className="input"
                     value={listing.deliveryMethod}
+                    onChange={(e) => handleListingChange(listingIndex, e)}
+                  />
+                </div>
+
+                <div>
+                  <label className="text-sm font-medium">Payment Link</label>
+                  <input
+                    name="paymentLink"
+                    placeholder="Paste the payment link here"
+                    className="input"
+                    value={listing.paymentLink}
                     onChange={(e) => handleListingChange(listingIndex, e)}
                   />
                 </div>
@@ -400,6 +431,18 @@ export default function CreateEvent() {
                         }
                       />
                     </div>
+                    <div>
+                      <label className="text-sm font-medium">Area</label>
+                      <input
+                        name="area"
+                        placeholder="Circle Block 9 "
+                        className="input"
+                        value={it.area}
+                        onChange={(e) =>
+                          handleItemChange(listingIndex, itemIndex, e)
+                        }
+                      />
+                    </div>
 
                     <div>
                       <label className="text-sm font-medium">Seat number</label>
@@ -430,8 +473,6 @@ export default function CreateEvent() {
                         }
                       />
                     </div>
-
-                
 
                     {/* <div className="col-span-2">
                       <label className="text-sm font-medium">

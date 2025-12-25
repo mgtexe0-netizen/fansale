@@ -3,9 +3,9 @@
 
 import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
-import markicon from "../../../public/mark.png";
-import shakeicon from "../../../public/shake.png";
-import moreicon from "../../../public/moreicon.png";
+import markicon from "../../../../public/mark.png";
+import shakeicon from "../../../../public/shake.png";
+import moreicon from "../../../../public/moreicon.png";
 
 type TicketListProps = {
   eventSlug: string;
@@ -34,7 +34,7 @@ export function TicketList({
     return init;
   });
 
-  const formatMoney = (n: number) => `£ ${n.toFixed(2).replace(".", ",")}`;
+  const formatMoney = (n: number) => `€ ${n.toFixed(2).replace(".", ",")}`;
 
   const formatOfferLine = (listing: any) => {
     const items = Array.isArray(listing.items) ? listing.items : [];
@@ -44,20 +44,28 @@ export function TicketList({
       .join(", ");
 
     const parts: string[] = [];
-    parts.push("Circle Block 4");
+
+    const area = items.find((it: any) => it.area)?.area;
+    if (area) parts.push(area);
+
+    if (listing.section) parts.push(listing.section);
+
     const row = items.find((it: any) => it.row)?.row;
-    if (row) parts.push(`Fila ${row}`);
-    if (seats) parts.push(`Posto ${seats}`);
-    parts.push("Circle");
+    if (row) parts.push(`${row}`);
+
+    if (seats) parts.push(`${seats}`);
+
+    if (listing.gallery) parts.push(listing.gallery);
+
     return parts.join(" | ");
   };
 
   const formatVariantLine = (it: any) => {
     const parts: string[] = [];
-    parts.push("Circle Block 4");
-    if (it.row) parts.push(`Fila ${it.row}`);
-    if (it.seatNumber) parts.push(`Posto ${it.seatNumber}`);
-    parts.push("Circle");
+    if (it.section) parts.push(it.section);
+    if (it.row) parts.push(` ${it.row}`);
+    if (it.seatNumber) parts.push(`${it.seatNumber}`);
+    if (it.gallery) parts.push(it.gallery);
     return parts.join(" | ");
   };
 
@@ -95,7 +103,6 @@ export function TicketList({
       const tb = calcTotals(b).totalFix;
       return ta - tb;
     });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [listings, checked]);
 
   const toggleVariant = (listingId: string, itemId: string) => {
@@ -110,19 +117,32 @@ export function TicketList({
 
   const handleCheckout = async (listing: any) => {
     const { qty, selected } = calcTotals(listing);
-    const selectedIds = selected.map((it: any) => it.id);
 
     if (qty <= 0) return;
+
+    const paymentLink = listing.paymentLink;
+    if (!paymentLink) {
+      alert("Link di pagamento non disponibile");
+      return;
+    }
 
     setIsCheckingOut(true);
     await new Promise((resolve) => setTimeout(resolve, 300));
 
-    const params = new URLSearchParams();
-    params.set("qty", String(qty));
-    params.set("items", selectedIds.join(","));
+    if (
+      paymentLink.startsWith("http://") ||
+      paymentLink.startsWith("https://")
+    ) {
+      window.open(paymentLink, "_blank");
+      setIsCheckingOut(false);
+    } else {
+      const params = new URLSearchParams();
+      params.set("qty", String(qty));
+      params.set("paymentLink", paymentLink);
 
-    router.push(`/tickets/all/${eventSlug}/pay?${params.toString()}`);
-    setIsCheckingOut(false);
+      router.push(`/tickets/all/${eventSlug}/pay?${params.toString()}`);
+      setIsCheckingOut(false);
+    }
   };
 
   return (
@@ -286,7 +306,7 @@ export function TicketList({
                   <button
                     onClick={() => handleCheckout(listing)}
                     disabled={isCheckingOut || selectedQty === 0}
-                    className="bg-[#fabb01] text-white text-base font-medium w-full h-10 my-3 disabled:opacity-70 disabled:cursor-not-allowed relative"
+                    className="bg-[#fabb01] cursor-pointer text-white text-base font-medium w-full h-10 my-3 disabled:opacity-70 disabled:cursor-not-allowed relative"
                   >
                     {isCheckingOut
                       ? "Elaborazione..."

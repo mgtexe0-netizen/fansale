@@ -61,6 +61,9 @@ export default async function EventPage({ params }: PageProps) {
 
   if (!event) notFound();
 
+  const firstListing = event.listings[0];
+  const venueMapUrl = firstListing?.venueMap || mapimg.src;
+
   return (
     <div className="min-h-screen bg-[#f3f3f3] px-4 ">
       <EventHeader event={event} />
@@ -73,9 +76,9 @@ export default async function EventPage({ params }: PageProps) {
         <div className="h-[260px] flex items-center justify-center">
           <div className="relative w-[90%] h-[80%] bg-white flex items-center justify-center text-[12px] text-[#999]">
             <img
-              className="w-full h-full object-cover"
-              src={mapimg.src}
-              alt=""
+              className="w-full h-full object-contain"
+              src={venueMapUrl}
+              alt="Venue map"
             />
           </div>
         </div>
@@ -92,7 +95,6 @@ export default async function EventPage({ params }: PageProps) {
         </div>
       </div>
 
-      {/* Biglietti + mappa posti DESKTOP (dentro TicketCard) */}
       <TicketCard eventSlug={event.slug} listings={event.listings} />
 
       <div className="flex flex-col gap-3">
@@ -102,10 +104,10 @@ export default async function EventPage({ params }: PageProps) {
           </h2>
           <hr className="my-3" />
           <p className="text-sm">
-            Non c’è nulla di adatto per te? Il nostro agente di ricerca ti
+            Non c'è nulla di adatto per te? Il nostro agente di ricerca ti
             avvisa non appena sono disponibili offerte adatte per il tuo evento
             desiderato su fanSALE. Imposta semplicemente i tuoi criteri di
-            ricerca e ricevi le offerte via e-mail con l’intervallo desiderato.{" "}
+            ricerca e ricevi le offerte via e-mail con l'intervallo desiderato.{" "}
             <span className="text-fns-primary font-semibold">
               Crea un agente di ricerca
             </span>
@@ -121,7 +123,7 @@ export default async function EventPage({ params }: PageProps) {
             Hai acquistato biglietti per Nashville In Concert: The Encore Tour
             venerdì, 13/02/2026 19:00, Eventim Apollo, W6 9QH LONDON ma non hai
             tempo per andare? Nessun problema: con fanSALE puoi vendere i tuoi
-            biglietti d’ingresso in modo semplice, rapido e sicuro tramite il
+            biglietti d'ingresso in modo semplice, rapido e sicuro tramite il
             mercato online di Eventim. In questo modo, puoi vendere i tuoi
             biglietti legalmente e in modo affidabile a veri fan, anche per
             eventi sold-out.
