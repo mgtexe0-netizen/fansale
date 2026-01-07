@@ -34,7 +34,14 @@ export function TicketList({
     return init;
   });
 
-  const formatMoney = (n: number) => `€ ${n.toFixed(2).replace(".", ",")}`;
+  const formatMoney = (n: number) => {
+    return new Intl.NumberFormat("it-IT", {
+      style: "currency",
+      currency: "EUR",
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    }).format(n);
+  };
 
   const formatOfferLine = (listing: any) => {
     const items = Array.isArray(listing.items) ? listing.items : [];

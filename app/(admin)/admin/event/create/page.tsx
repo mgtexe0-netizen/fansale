@@ -215,7 +215,7 @@ export default function CreateEvent() {
   };
 
   return (
-    <div className="px-8 py-10 space-y-10 max-w-5xl mx-auto">
+    <div className="px-4 md:px-8 py-10 space-y-10 max-w-5xl mx-auto">
       <h1 className="text-3xl font-bold">Create Event</h1>
 
       <form className="space-y-12" onSubmit={handleSubmit}>
@@ -240,10 +240,10 @@ export default function CreateEvent() {
               value={eventData.slug}
               onChange={handleEventChange}
             />
-            <Button type="button" onClick={generateSlug}>
+            <Button className="bg-fns-primary" type="button" onClick={generateSlug}>
               Generate
             </Button>
-          </div>
+          </div> 
 
           <textarea
             name="description"
